@@ -28,7 +28,8 @@ class MainWindow_UI(object):
                             border-color: black;
                             border-radius: 2px;
      
-                            """   
+                            """
+        self.LogText ="""2018-3-8 15:09:18 开始奔跑，good luck!/n"""
 
 
     def setupUi(self, MainWindow):
@@ -42,6 +43,10 @@ class MainWindow_UI(object):
         MainWindow.setSizePolicy(sizePolicy)
 
         self.create_window(MainWindow)
+        self.p=PatientLoginWindow()
+   #按钮的动作 
+        self.webButtonAction()
+        self.PatientButtonAction()
         
     def create_window(self,MainWindow):
         self.centralwidget = QtWidgets.QWidget(MainWindow) #主框
@@ -57,6 +62,8 @@ class MainWindow_UI(object):
         self.createGraphBox()
         self.createRightGroupBox()
         self.creatFormGroupBox()
+        
+     
         mainLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         
         hboxLayout = QtWidgets.QHBoxLayout()
@@ -169,14 +176,74 @@ class MainWindow_UI(object):
         self.formGroupBox.setStyleSheet(self.WingetStyle)
 
         layout = QtWidgets.QFormLayout()
-        performanceLabel = QtWidgets.QLabel("性能特点：")
-        performanceEditor = QtWidgets.QLineEdit("舱内设计更宜居方便天宫生活")
-        planLabel = QtWidgets.QLabel("发射规划：")
-        planEditor = QtWidgets.QTextEdit()
-        planEditor.setPlainText("2020年之前，中国计划初步完成空间站建设")
+        performanceLabel = QtWidgets.QLabel("Console：")
+        performanceEditor = QtWidgets.QLineEdit("目前显示的都是<信息>")
+        planLabel = QtWidgets.QLabel("History Log：")
+        self.planEditor = QtWidgets.QTextEdit()
+        self.planEditor.setPlainText(self.LogText)
         layout.addRow(performanceLabel,performanceEditor)
-        layout.addRow(planLabel,planEditor)
+        layout.addRow(planLabel,self.planEditor)
         self.formGroupBox.setLayout(layout)
+    def setPlanEditor(self,msg):
+        self.LogText =self.LogText + msg+ "\n"
+        self.planEditor.setPlainText(self.LogText)
+  
     
-    def CreatWebTab(self):
+    def CreatWebTab(self):#穿件一个TAB 用于网络 现在占时定义为百度
+        if self.webTabFlag == False:
+            self.BaiduView = QWebEngineView(self.centralwidget)
+            self.BaiduView.setMinimumSize(QtCore.QSize(500, 400))
+            self.BaiduView.setUrl(QtCore.QUrl("https://www.baidu.com/"))
+            self.BaiduView.setObjectName("search")
+            self.WebTab=self.GraphTab.addTab(self.BaiduView,'百度 view')
+            self.setPlanEditor('打开web 信息')
+            self.webTabFlag = True
+        elif self.webTabFlag == True:
+            self.WebTab=self.GraphTab.removeTab(1)
+            self.setPlanEditor('关闭web 信息')
+            self.webTabFlag = False
+    def webButtonAction(self): # 百度按钮的 动作
+        self.webTabFlag=False
+        self.WebButton.clicked.connect(self.CreatWebTab)
+        
+    def PatientButtonAction(self):
+        self.PatientButton.clicked.connect(self.p.handle_click)
+        self.setPlanEditor('打开Patient 信息')
+        
+class PatientLoginWindow(QtWidgets.QWidget):# 未完成 病人注册信息
+    def __init__(self, parent=None):
+        super(PatientLoginWindow, self).__init__(parent)
+        self.resize(400, 400)
+        self.setStyleSheet("background-color:rgba(255, 255, 255,220);")
+        self.setWindowTitle('Patient Information Login')
+        self.CreatLayoutBox()
+        
+    def CreatLayoutBox(self):
+         self.mainLayout= QtWidgets.QHBoxLayout(self)
+         
+         self.informationLayout= QtWidgets.QGridLayout()
+         self.massage=QtWidgets.QWidget()
+
+         label=QtWidgets.QLabel()
+         label.setText("GUI")
+         label.setFixedSize(20,20)
+         self.informationLayout.addWidget(label)
+         
+         self.mainLayout.addLayout(self.informationLayout)
+         self.mainLayout.addWidget(self.massage)
+         self.mainLayout.setSpacing(2)
+         self.mainLayout.setStretch(0,6)
+         self.mainLayout.setStretch(1,4)
+
+        
+        
+    def handle_click(self):
+       
+        if not self.isVisible():
+            self.show()
+
+    def handle_close(self):
+        self.close()
+
+
         

@@ -8,7 +8,7 @@ Created on Mon Mar  5 14:29:10 2018
 from qtpy.QtWidgets import QTreeWidgetItem,QMenu,QApplication,QAction,QMainWindow
 from qtpy import QtGui,QtWidgets,QtCore
 from qtpy.QtCore import Qt,QUrl,QDate
-from main_layout import MainWindow_UI
+from main_layout import MainWindow_UI,PatientLoginWindow
 import sys
 
 class mywindow(QMainWindow):
@@ -25,6 +25,8 @@ def main():
       
 
     widows.show()
+    s=PatientLoginWindow()
+    s.show()
     sys.exit(app.exec_())
 
 
