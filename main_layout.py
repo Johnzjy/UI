@@ -64,9 +64,10 @@ class MainWindow_UI(object):
         hboxLayout.addWidget(self.LeftGroupBox)
         hboxLayout.addWidget(self.GraphTab)
         hboxLayout.addWidget(self.RightGroupBox)
-        hboxLayout.setStretch(0,10)
-        hboxLayout.setStretch(1,70)
-        hboxLayout.setStretch(2,20)
+        hboxLayout.setSpacing(10) #设置间隔信息
+        hboxLayout.setStretch(0,5)
+        hboxLayout.setStretch(1,400)
+        hboxLayout.setStretch(2,60)
         
         
         mainLayout.addLayout(hboxLayout)
@@ -90,36 +91,65 @@ class MainWindow_UI(object):
         #self.GraphBox=QtWidgets.QWidget()
         #self.GraphTab=self.GraphTab.addTab(self.GraphBox,'graph view')
         
-    def setQbutton(self,QButton):
+    def setQbutton(self,QButton,pixPATH,name):
         self.ButtonStyle="""
-                            background:lightgray;
+                            background:rgba(0, 0, 0, 0);
                             border-width: 0.5px;
                             border-style: none;
                             border-color: black;
                             border-radius: 2px;
-     
+                            icon-size:50px 5px;
+                           
                             """   
-        QButton.setFixedSize(150,30)
+        QButton.setText(name)                 
+        QButton.setIcon(QtGui.QIcon(QtGui.QPixmap(pixPATH)))
+        QButton.setFixedSize(68,68)#设置按钮大小
         QButton.setStyleSheet(self.ButtonStyle)
+        QButton.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)#设置文字在图标面 
+
+        #QButton.setIconSize(150,150)
     
     def createLeftGroupBox(self):
         self.LeftGroupBox = QtWidgets.QGroupBox("Grid layout")
         self.LeftGroupBox.setStyleSheet(self.WingetStyle)
+        #self.LeftGroupBox.setFixedSize(200,600)
         layout = QtWidgets.QGridLayout()
-        self.AButton=QtWidgets.QPushButton("A")
-        self.BButton=QtWidgets.QPushButton("B")
-        self.CButton=QtWidgets.QPushButton("C")
-        self.DButton=QtWidgets.QPushButton("D")
-        self.setQbutton(self.AButton)
-        self.setQbutton(self.BButton)
-        self.setQbutton(self.CButton)
-        self.setQbutton(self.DButton)
         
-        layout.setSpacing(100) 
-        layout.addWidget(self.AButton,0,0)
-        layout.addWidget(self.BButton,1,0)
-        layout.addWidget(self.CButton,0,1)
-        layout.addWidget(self.DButton,1,1)
+
+        '''
+        创建按钮
+        '''
+        self.DatasButton=QtWidgets.QToolButton()#数据按钮
+        self.GraphButton=QtWidgets.QToolButton()#绘图
+        self.ContactsButton=QtWidgets.QToolButton()#联系人
+        self.PatientButton=QtWidgets.QToolButton()#病人信息
+        self.FileButton=QtWidgets.QToolButton()#文件
+        self.WebButton=QtWidgets.QToolButton()#网络
+        self.CloudButton=QtWidgets.QToolButton()
+        self.ScanButton=QtWidgets.QToolButton()
+        '''
+        设置按钮的外观
+        '''
+        self.setQbutton(self.DatasButton,'ICON\\pie.ico',"Date")
+        self.setQbutton(self.GraphButton,'ICON\\bar.ico',"Graph")
+        self.setQbutton(self.ContactsButton,'ICON\\contacts.ico',"contacts")
+        self.setQbutton(self.PatientButton,'ICON\\patient.ico',"patient")
+        self.setQbutton(self.FileButton,'ICON\\file.ico',"File")
+        self.setQbutton(self.WebButton,'ICON\\baidu.ico',"Web")
+        self.setQbutton(self.CloudButton,'ICON\\Cloud.ico',"Cloud")
+        self.setQbutton(self.ScanButton,'ICON\\Scan.png',"Scan")
+        '''
+        设置按钮位置信息
+        '''
+        layout.setSpacing(2) 
+        layout.addWidget(self.DatasButton,0,0)
+        layout.addWidget(self.GraphButton,1,0)
+        layout.addWidget(self.ContactsButton,0,1)
+        layout.addWidget(self.PatientButton,1,1)
+        layout.addWidget(self.FileButton,2,0)
+        layout.addWidget(self.WebButton,2,1)
+        layout.addWidget(self.CloudButton,3,0)
+        layout.addWidget(self.ScanButton,4,0)
         self.LeftGroupBox.setLayout(layout)
   
 
@@ -147,3 +177,6 @@ class MainWindow_UI(object):
         layout.addRow(performanceLabel,performanceEditor)
         layout.addRow(planLabel,planEditor)
         self.formGroupBox.setLayout(layout)
+    
+    def CreatWebTab(self):
+        
