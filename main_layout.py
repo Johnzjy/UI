@@ -252,7 +252,16 @@ class PatientLoginWindow(QtWidgets.QWidget):# 未完成 病人注册信息
         self.informationLayout.addWidget(self.IDLabel,1,0)
         self.informationLayout.addWidget(self.IDEdit,1,1)
         
+        
         self.BirthLabel=QtWidgets.QLabel("Date of Birth")
+        self.BirthDateEdit=QtWidgets.QDateEdit()
+        strdate = time.strftime("%Y-%m-%d") #gets current time to put into dateedit
+        #dateobj = datetime.strptime(curdate, "%Y-%m-%d")#converts to datetime object
+        self.Qdate = QDate.fromString(strdate,"yyyy-MM-dd")
+        self.BirthDateEdit.setDate(self.Qdate )
+        self.informationLayout.addWidget(self.BirthLabel,2,0)
+        self.informationLayout.addWidget(self.BirthDateEdit,2,1)
+        self.
         
     def handle_click(self):
        
