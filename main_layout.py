@@ -219,23 +219,40 @@ class PatientLoginWindow(QtWidgets.QWidget):# 未完成 病人注册信息
         self.CreatLayoutBox()
         
     def CreatLayoutBox(self):
-         self.mainLayout= QtWidgets.QHBoxLayout(self)
+         self.mainLayout= QtWidgets.QVBoxLayout(self)
          
          self.informationLayout= QtWidgets.QGridLayout()
          self.massage=QtWidgets.QWidget()
 
          label=QtWidgets.QLabel()
-         label.setText("GUI")
-         label.setFixedSize(20,20)
-         self.informationLayout.addWidget(label)
+         label.setText("Patient")
+         #label.setFixedSize(400,20)
+         #label.setScaledContents(True)
+         self.mainLayout.addWidget(label)
          
          self.mainLayout.addLayout(self.informationLayout)
          self.mainLayout.addWidget(self.massage)
          self.mainLayout.setSpacing(2)
-         self.mainLayout.setStretch(0,6)
-         self.mainLayout.setStretch(1,4)
+         self.mainLayout.setStretch(0,1)
+         self.mainLayout.setStretch(1,20)
+         self.mainLayout.setStretch(2,20)
 
+         self.CrearPatientInf()
+
+    def CrearPatientInf(self):
+        self.NameLabel=QtWidgets.QLabel("Patient Name")
+        self.NameEdit = QtWidgets.QLineEdit()
+        self.NameEdit.setPlaceholderText('输入姓名')
+        self.informationLayout.addWidget(self.NameLabel,0,0)
+        self.informationLayout.addWidget(self.NameEdit,0,1)
         
+        self.IDLabel=QtWidgets.QLabel("Patient ID")
+        self.IDEdit = QtWidgets.QLineEdit()
+        self.IDEdit.setPlaceholderText('输入ID')
+        self.informationLayout.addWidget(self.IDLabel,1,0)
+        self.informationLayout.addWidget(self.IDEdit,1,1)
+        
+        self.BirthLabel=QtWidgets.QLabel("Date of Birth")
         
     def handle_click(self):
        
